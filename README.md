@@ -46,6 +46,10 @@ pip install python-dotenv
 
 Запустіть скрипт install.py
 
+```
+python install.py
+```
+
 ### 3. Налаштуйте параметри MQTT
 
 В .env налаштуйте параметри для доступу до MQTT
