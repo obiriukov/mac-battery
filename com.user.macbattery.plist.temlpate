@@ -10,7 +10,7 @@
         <string>{mac-battery}</string>
     </array>
     <key>StartInterval</key>
-    <integer>60</integer>
+    <integer>{update-interval}</integer>
     <key>RunAtLoad</key>
     <true/>
     <key>StandardOutPath</key>

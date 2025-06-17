@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+from dotenv import load_dotenv
 
 env_example = ".env.example"
 env_file = ".env"
@@ -14,33 +15,37 @@ if not os.path.exists(env_file):
 else:
     print(f"{env_file} already exists.")
 
-    plist_template = "com.user.macbattery.plist.temlpate"
-    plist_file = "com.user.macbattery.plist"
+load_dotenv()
 
-    if os.path.exists(plist_template):
-        with open(plist_template, "r") as f:
-            plist_content = f.read()
+plist_template = "com.user.macbattery.plist.temlpate"
+plist_file = "com.user.macbattery.plist"
+update_interval = os.getenv("UPDATE_INTERVAL", "60")
 
-        venv_python = os.path.join("venv", "bin", "python3")
-        if os.path.exists(venv_python):
-            python_path = os.path.abspath(venv_python)
-        else:
-            python_path = sys.executable
+if os.path.exists(plist_template):
+    with open(plist_template, "r") as f:
+        plist_content = f.read()
 
-        mac_battery_path = os.path.abspath("mac-battery.py")
-
-        plist_content = plist_content.replace("{python}", python_path)
-        plist_content = plist_content.replace("{mac-battery}", mac_battery_path)
-
-        with open(plist_file, "w") as f:
-            f.write(plist_content)
-        print(f"Created {plist_file} from {plist_template}")
-        
-        launch_agents_dir = os.path.expanduser("~/Library/LaunchAgents")
-        if not os.path.exists(launch_agents_dir):
-            os.makedirs(launch_agents_dir)
-        dest_path = os.path.join(launch_agents_dir, plist_file)
-        shutil.move(plist_file, dest_path)
-        print(f"Moved {plist_file} to {dest_path}")
+    venv_python = os.path.join("venv", "bin", "python3")
+    if os.path.exists(venv_python):
+        python_path = os.path.abspath(venv_python)
     else:
-        print(f"{plist_template} does not exist.")
+        python_path = sys.executable
+
+    mac_battery_path = os.path.abspath("mac-battery.py")
+
+    plist_content = plist_content.replace("{python}", python_path)
+    plist_content = plist_content.replace("{mac-battery}", mac_battery_path)
+    plist_content = plist_content.replace("{update-interval}", update_interval)
+
+    with open(plist_file, "w") as f:
+        f.write(plist_content)
+    print(f"Created {plist_file} from {plist_template}")
+    
+    launch_agents_dir = os.path.expanduser("~/Library/LaunchAgents")
+    if not os.path.exists(launch_agents_dir):
+        os.makedirs(launch_agents_dir)
+    dest_path = os.path.join(launch_agents_dir, plist_file)
+    shutil.move(plist_file, dest_path)
+    print(f"Moved {plist_file} to {dest_path}")
+else:
+    print(f"{plist_template} does not exist.")

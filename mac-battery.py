@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+load_dotenv()
 
 def get_battery_status():
     result = subprocess.run(
@@ -36,8 +37,6 @@ def get_battery_percent():
             percent = int(line.split('\t')[-1].split('%')[0].strip())
             return percent
     return None
-
-load_dotenv()
 
 MQTT_USERNAME = os.getenv("MQTT_USERNAME", "mqtt-user")
 MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "mqtt-password")
