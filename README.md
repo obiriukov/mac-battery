@@ -29,11 +29,15 @@ pip3 install python-dotenv
 1. Відкрийте термінал у вашій папці проекту.
 2. Створіть віртуальне середовище:
 
-```python3 -m venv venv```
+```
+python3 -m venv venv
+```
 
 3. Активуйте середовище:
 
-```source venv/bin/activate```
+```
+source venv/bin/activate
+```
 
 4. Встановіть потрібні пакети:
 
@@ -58,4 +62,6 @@ python install.py
 
 Активуйте автоматичний запуск скрипта за допомогою команди
 
-```launchctl load ~/Library/LaunchAgents/com.user.macbattery.plist```
+```
+launchctl load ~/Library/LaunchAgents/com.user.macbattery.plist
+```
